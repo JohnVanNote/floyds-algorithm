@@ -1,0 +1,33 @@
+John Van Note
+03/06/12
+
+Files include:
+- README
+- floyd.py
+- makefile
+- example.input
+- example2.input
+
+This python program creates a all-pairs shortest path matrix determining the
+minimum distance between nodes in a weighted graph (known as the
+Floyd-Warshall algorithm). For more information on the algoritm specifically
+reference: http://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm.
+
+The input for the program is best done from a flat file, the file syntax is
+best shown viewing either example.input or example2.input. The program
+slerps the information, creates a predecessor (naive) matrix and then
+calculates the "all-pairs shortest path matrix". 
+
+Two examples of input of provided in example.input and example2.input, both
+can be tested with the commands:
+$> make test1
+AND 
+$> make test2
+respectfully.
+
+Taking input from the user directly can be done through
+$> make run
+but this is not recommended as it is error prone.
+
+New input should be piped in from a file following the format in
+example.input or example2.input.
