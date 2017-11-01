@@ -19,10 +19,8 @@ run: $(floyd)
 
 # test example.input
 test1: $(floyd)
-	python $(floyd) < example.input
+	python $(floyd) < example1.input
 
 # test example2.input
 test2: $(floyd)
 	python $(floyd) < example2.input
-
-#eof

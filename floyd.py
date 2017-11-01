@@ -12,92 +12,97 @@
 
 import sys
 
-# Sentinel for the highest distance possible between verticies
-def getSentinel():
+
+# Sentinel for the highest distance possible between vertices
+def get_sentinel():
   return sys.maxint
+
 
 # createMatrix: Creates a BLANK matrix
 # @param numRows is the number of rows, the number of columns is fine too
 # @return a blank matrix (2-D list)
-def createMatrix(numRows):
-  SENTINEL = getSentinel()
+def create_matrix(numRows):
+  sentinel = get_sentinel()
   matrix = []
   for i in range(numRows):
     col = []
     for j in range(numRows):
       if i != j:
-        col.append(SENTINEL)
+        col.append(sentinel)
       else:
         col.append(0)
     matrix.append(col)
   return matrix
 
+
 # assignMatrix: Assigns values to a predecessor matrix
 # @param matrix is the matrix to be assigned (2-D list)
 # @param simPath is an array that comes from stdin
 # no return (the matrix will be manipulated by reference)
-def assignMatrix(matrix, simPath):
-  numRow = int(simPath[0])
-  simPath.remove(simPath[0])
-  for i in simPath:    
-    numCol = int(i.split(',')[0])
+def assign_matrix(matrix, sim_path):
+  num_row = int(sim_path[0])
+  sim_path.remove(sim_path[0])
+  for i in sim_path:
+    num_col = int(i.split(',')[0])
     dist = int(i.split(',')[1])
-    matrix[numRow][numCol] = dist
+    matrix[num_row][num_col] = dist
     # Since the graph is undirected we mirror this image
-    matrix[numCol][numRow] = dist  
+    matrix[num_col][num_row] = dist
+
 
 # floydMatrix: Creates Floyd-Warshall Matrix by implementing the Algorithm
 # @param matrix is the matrix that needs the algorithm applied to (2-D list)
 # no return (the matrix will be manipulated by reference)
-def floydMatrix(matrix):
-  numRows = len(matrix)
-  for k in range(0, numRows):
-    for i in range(0, numRows):
-      for j in range(0,numRows):
+def floyd_matrix(matrix):
+  num_rows = len(matrix)
+  for k in range(0, num_rows):
+    for i in range(0, num_rows):
+      for j in range(0,num_rows):
         matrix[i][j] = min(matrix[i][j], matrix[i][k]+matrix[k][j])
+
 
 # printMatrix: Formatted printing (to stdout) for a matrix
 # @param matrix is the matrix to be printed
 # no return
-def printMatrix(matrix):
-  SENTINEL = getSentinel()
+def print_matrix(matrix):
+  sentinel = get_sentinel()
   for i in matrix:
     for j in i:
-      if j != SENTINEL:
+      if j != sentinel:
         sys.stdout.write('%4d' % j)
       else:
         sys.stdout.write('%4s' % 'INF')
     sys.stdout.write('\n')
+
 
 # where the magic happens
 def main():
   # Reads from stdin
   data = sys.stdin.readlines()
   # Creates a (empty) matrix
-  numRows = 0
+  num_rows = 0
   for rows in data:
-    numRows = numRows + 1
-  matrix = createMatrix(numRows)
+    num_rows = num_rows + 1
+  matrix = create_matrix(num_rows)
   # Assigns distance to predecessor matrix
   l = []
   for line in data:
     l.append(line.split())
   for i in l:
-    assignMatrix(matrix, i)
-  # Prints predecesssor matrix (with foratting and whatnot)
-  predMatrix = matrix
+    assign_matrix(matrix, i)
+  # Prints predecessor matrix (with formatting and whatnot)
+  pred_matrix = matrix
   sys.stdout.write("Predecessor Matrix\n")
-  printMatrix(predMatrix)
+  print_matrix(pred_matrix)
   sys.stdout.write('\n')
   # Floyds up the matrix
-  floydMatrix(matrix)
+  floyd_matrix(matrix)
   # Prints finished matrix
-  compMatrix = matrix
+  comp_matrix = matrix
   sys.stdout.write('All Pairs Shortest Path Matrix\n')
-  printMatrix(compMatrix)  
+  print_matrix(comp_matrix)
+
 
 # this thing has to be here for Python reasons
 if __name__ == '__main__':
-  main() 
-
-#eof 
+  main()
